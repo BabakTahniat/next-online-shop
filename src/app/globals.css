@@ -44,7 +44,8 @@
 }
 
 :root {
-    --radius: 0.625rem;
+    /* --radius: 0.625rem; */
+    --radius: 0rem;
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -127,6 +128,6 @@
 
 @layer components {
     .site-container {
-        @apply mx-auto px-4 max-w-[1440px];
+        @apply mx-auto max-w-[1440px] px-6 md:px-12;
     }
 }

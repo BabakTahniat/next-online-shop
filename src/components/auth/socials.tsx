@@ -1,22 +1,28 @@
 import { Button } from '@/components/ui/button';
-import { signIn } from 'next-auth/react';
+// import { signIn } from 'next-auth/react';
+import { signInOath } from '@/actions';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
 
 export default function Socials() {
     return (
-        <div className="flex flex-col items-center w-full gap-y-2">
+        <div className="flex w-full flex-col items-center gap-y-4">
             <Button
+                variant="outline"
                 size="lg"
                 className="w-full"
-                onClick={() => signIn('google')}
+                onClick={() => signInOath('google')}
             >
-                Sign in with google
+                <span>Sign in with google</span>
+                <FaGoogle />
             </Button>
             <Button
+                variant="outline"
                 size="lg"
                 className="w-full"
-                onClick={() => signIn('github')}
+                onClick={() => signInOath('github')}
             >
-                Sign in with github
+                <span>Sign in with github</span>
+                <FaGithub />
             </Button>
         </div>
     );

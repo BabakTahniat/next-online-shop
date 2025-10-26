@@ -1,6 +1,5 @@
 import {
     Card,
-    CardAction,
     CardContent,
     CardFooter,
     CardHeader,
@@ -14,6 +13,7 @@ type AuthCardProps = {
     cardTitle: string;
     backButtonHref: string;
     backButtonLabel: string;
+    backButtonText?: string;
     showSocials?: boolean;
 };
 
@@ -22,6 +22,7 @@ export default function AuthCard({
     cardTitle,
     backButtonHref,
     backButtonLabel,
+    backButtonText,
     showSocials = false,
 }: AuthCardProps) {
     return (
@@ -30,13 +31,18 @@ export default function AuthCard({
                 <CardTitle>{cardTitle}</CardTitle>
             </CardHeader>
             <CardContent>{children}</CardContent>
+            <hr className="my-4" />
             {showSocials && (
                 <CardFooter>
                     <Socials />
                 </CardFooter>
             )}
-            <CardFooter>
-                <BackButton href={backButtonHref} label={backButtonLabel} />
+            <CardFooter className="flex justify-center">
+                <BackButton
+                    href={backButtonHref}
+                    label={backButtonLabel}
+                    text={backButtonText}
+                />
             </CardFooter>
         </Card>
     );

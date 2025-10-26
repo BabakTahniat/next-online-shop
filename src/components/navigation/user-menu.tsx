@@ -1,17 +1,18 @@
 'use client';
 
-import { signIn, signOut } from 'next-auth/react';
+// import { signOut } from 'next-auth/react';
 import { Button } from '../ui/button';
 import type { User } from 'next-auth';
 import Image from 'next/image';
 import { useFormStatus } from 'react-dom';
-import Loading from '@/app/loading';
+import { Spinner } from '../ui/spinner';
+import { signOut } from '@/actions';
 
 export default function UserMenu({ user }: { user: User }) {
     return (
         <form action={signOut} className="flex flex-col gap-4">
-            <div className="bg-slate-300 p-4 flex flex-col gap-1 justify-center items-center">
-                <span className="rounded-full overflow-hidden">
+            <div className="flex flex-col items-center justify-center gap-1 bg-slate-300 p-4">
+                <span className="overflow-hidden rounded-full bg-slate-50">
                     <Image
                         width={64}
                         height={64}
@@ -22,7 +23,7 @@ export default function UserMenu({ user }: { user: User }) {
                 <span>{user.name}</span>
                 <span>{user.email}</span>
             </div>
-            <ul className="flex flex-col space-y-4 justify-center">
+            <ul className="flex flex-col justify-center space-y-4">
                 <li>My Orders</li>
                 <li>Wish List</li>
                 <li>Settings</li>
@@ -38,11 +39,8 @@ export default function UserMenu({ user }: { user: User }) {
 function SubmitButton({ label }: { label: string }) {
     const { pending } = useFormStatus();
     return (
-        <Button
-            className="w-full rounded-none hover:cursor-pointer"
-            disabled={pending}
-        >
-            {pending ? <Loading /> : label}
+        <Button className="w-full hover:cursor-pointer" disabled={pending}>
+            {pending ? <Spinner /> : label}
         </Button>
     );
 }

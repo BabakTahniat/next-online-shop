@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1758053823840,
-      "tag": "0000_even_retro_girl",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1758224630604,
-      "tag": "0001_magenta_groot",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1758728696355,
-      "tag": "0002_young_winter_soldier",
+      "when": 1760971306633,
+      "tag": "0000_powerful_lizard",
       "breakpoints": true
     }
   ]
