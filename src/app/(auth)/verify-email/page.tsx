@@ -1,5 +1,6 @@
 import { loginUser } from '@/actions';
 import { signIn } from '@/auth';
+import { Button } from '@/components/ui/button';
 import { getUserByEmail, verifyUser } from '@/lib/queries/users';
 import {
     deleteVerificationTokenByEmail,
@@ -13,15 +14,15 @@ export default async function VerifyEmailPage({
 }: {
     searchParams: Promise<{ token: string }>;
 }) {
-    const prospectToken = (await searchParams).token;
+    const tentativeToken = (await searchParams).token;
 
-    if (!prospectToken) {
+    if (!tentativeToken) {
         return notFound();
     }
 
     // check if provided token is valid
     // check expiry time of token
-    const token = await getVerificationTokenByToken(prospectToken);
+    const token = await getVerificationTokenByToken(tentativeToken);
 
     if (!token || token.expires.getTime() < Date.now()) {
         return <h2>Wrong verification code or verification code expired</h2>;
@@ -39,8 +40,11 @@ export default async function VerifyEmailPage({
 
         return (
             <h2>
-                Email verified successfully. You can now{' '}
-                <Link href="/login">login</Link>
+                Email verified successfully. You can now
+                <Button asChild variant="link">
+                    <Link href="/login">login here</Link>
+                </Button>
+                .
             </h2>
         );
     }

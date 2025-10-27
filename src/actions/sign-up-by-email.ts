@@ -36,11 +36,10 @@ export async function registerUser(
         // check if user already exists
         const existingUser = await getUserByEmail(email);
 
-        // Check if user already in database
-        if (existingUser && existingUser.emailVerified) {
+        if (existingUser && !existingUser.passwordHash) {
             return {
                 root: {
-                    errors: ['Email already registered. Use another Email'],
+                    errors: ['Email already registered. Use another Email.'],
                 },
             };
         }
@@ -55,13 +54,11 @@ export async function registerUser(
                 success:
                     'Verification token sent to email. Please verify your Email.',
             };
-            // return {
-            //     errors: ['Email not verified. Please verify your email.'],
-            // };
         }
 
         const passwordHash = await bcrypt.hash(password, 12);
         await createNewUser(name, email, passwordHash);
+        console.log('#️⃣', passwordHash);
 
         const { token } = await createVerificationTokenByEmail(email); // create new token
         await sendVerificationTokenEmail(token, email);
@@ -69,10 +66,10 @@ export async function registerUser(
         return {
             success: 'Verification token sent to Email',
         };
-
-        redirect('/');
     } catch (error) {
-        if (error instanceof Error) console.log(error);
+        if (error instanceof Error) {
+            console.error(error);
+        }
         return {
             root: {
                 errors: ['Something went wrong'],

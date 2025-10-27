@@ -50,7 +50,9 @@ const providers: Provider[] = [
                 }
                 if (!user.passwordHash) {
                     console.log('DEBUG: User has no password (OAuth user)');
-                    return null;
+                    throw new Error(
+                        'Login method invalid. Use another login method.',
+                    );
                 }
 
                 const isMatched = await bcrypt.compare(
@@ -68,14 +70,15 @@ const providers: Provider[] = [
 
                 console.log('DEBUG: Auth successful');
                 return user;
-            } catch (err) {
+            } catch (error) {
                 if (
-                    err instanceof Error &&
-                    err.message === 'EmailNotVerified'
+                    error instanceof Error
+                    // &&
+                    // err.message === 'EmailNotVerified'
                 ) {
-                    throw err;
+                    throw error;
                 }
-                console.log('DEBUG: Unknown error in authorize', err);
+                console.log('DEBUG: Unknown error in authorize', error);
                 return null;
             }
         },
@@ -83,6 +86,13 @@ const providers: Provider[] = [
     Google({
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        authorization: {
+            // params: {
+            //     prompt: 'consent',
+            //     access_type: 'offline',
+            //     response_type: 'code',
+            // },
+        },
     }),
     GitHub({
         clientId: process.env.GITHUB_CLIENT_ID,

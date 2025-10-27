@@ -1,6 +1,6 @@
 CREATE TYPE "public"."user_role" AS ENUM('admin', 'user');--> statement-breakpoint
 CREATE TABLE "account" (
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"type" text NOT NULL,
 	"provider" text NOT NULL,
 	"provider_account_id" text NOT NULL,
@@ -15,12 +15,12 @@ CREATE TABLE "account" (
 --> statement-breakpoint
 CREATE TABLE "session" (
 	"session_token" text PRIMARY KEY NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"expires" timestamp with time zone NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "user" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
 	"email" text NOT NULL,
 	"password_hash" text NOT NULL,

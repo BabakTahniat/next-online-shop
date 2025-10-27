@@ -2,7 +2,7 @@
 
 import { signIn } from '@/auth';
 import type { signInFormFields } from '@/components/auth/signin-form';
-import { AuthError, type User } from 'next-auth';
+import { AuthError, CredentialsSignin, type User } from 'next-auth';
 import CallbackRouteError from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -75,22 +75,29 @@ export async function loginUser(
         return { success: 'Login successful' };
     } catch (error) {
         if (error instanceof AuthError) {
-            console.log('ERROR CAUSE: ', error.cause?.err);
+            console.log('ERROR CAUSE: ', error.cause);
             console.log('ERROR MESSAGE: ', error.message);
             console.log('ERROR TYPE: ', error.type);
-            console.log(error.cause?.err instanceof Error);
-            if (
-                error.cause?.err instanceof Error &&
-                error.cause.err.message === 'EmailNotVerified'
-            ) {
-                return {
-                    root: {
-                        errors: [
-                            'Email not verified. Please check your inbox.',
-                        ],
-                    },
-                };
+            console.log('ERROR NAME: ', error.name);
+            console.log('ERROR STACK: ', error.stack);
+            console.log(error instanceof CredentialsSignin);
+
+            if (error.cause?.err) {
+                return { root: { errors: [error.cause.err?.message] } };
             }
+
+            // if (
+            //     error.cause?.err instanceof Error &&
+            //     error.cause.err.message === 'EmailNotVerified'
+            // ) {
+            //     return {
+            //         root: {
+            //             errors: [
+            //                 'Email not verified. Please check your inbox.',
+            //             ],
+            //         },
+            //     };
+            // }
 
             if (error.type === 'CredentialsSignin') {
                 return {
@@ -113,29 +120,5 @@ export async function loginUser(
                 errors: ['Something went wrong. Please try again.'],
             },
         };
-        // if (
-        //     error instanceof Error &&
-        //     error.message.includes('EmailNotVerified')
-        // ) {
-        //     console.log('DEBUG : Into the if statement');
-        //     return {
-        //         root: {
-        //             errors: ['Email not verified. Please check your inbox.'],
-        //         },
-        //     };
-        // }
-        // if (error instanceof AuthError) {
-        //     if (error.type === 'CredentialsSignin') {
-        //         console.log('💥', error);
-        //         return {
-        //             root: {
-        //                 errors: ['Invalid Email or Password'],
-        //             },
-        //         };
-        //     }
-        // }
-        // return {
-        //     root: { errors: ['Something went wrong. Please try again'] },
-        // };
     }
 }

@@ -12,10 +12,11 @@ import {
     FieldGroup,
     FieldLabel,
 } from '@/components/ui/field';
-import { startTransition, useActionState } from 'react';
+import { startTransition, useActionState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Spinner } from '../ui/spinner';
+import { useRouter } from 'next/navigation';
 
 const signInSchema = z.object({
     email: z.email({
@@ -36,6 +37,7 @@ export default function SignInForm() {
         resolver: zodResolver(signInSchema),
         defaultValues: { email: '', password: '' },
     });
+    const router = useRouter();
 
     const [formState, formAction, pending] = useActionState(
         actions.loginUser,
@@ -47,6 +49,13 @@ export default function SignInForm() {
             formAction(formData);
         });
     }
+
+    useEffect(() => {
+        if (formState.success) {
+            const timer = setTimeout(() => router.push('/'), 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [router, formState.success]);
 
     return (
         <>

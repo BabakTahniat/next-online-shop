@@ -1,5 +1,4 @@
-import { auth } from '@/auth';
-import { signIn } from 'next-auth/react';
+import { auth, signIn } from '@/auth';
 
 export default async function Home() {
     const session = await auth();
@@ -7,7 +6,12 @@ export default async function Home() {
     return (
         <div>
             <p>{JSON.stringify(session?.user, null, 2)}</p>
-            <form action={signIn}>
+            <form
+                action={async () => {
+                    'use server';
+                    await signIn();
+                }}
+            >
                 <button>Sign In</button>
             </form>
         </div>

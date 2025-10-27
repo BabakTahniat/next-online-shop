@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-// import { signIn } from 'next-auth/react';
 import { signInOath } from '@/actions';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 
@@ -10,7 +9,7 @@ export default function Socials() {
                 variant="outline"
                 size="lg"
                 className="w-full"
-                onClick={() => signInOath('google')}
+                onClick={async () => await signInOath('google')}
             >
                 <span>Sign in with google</span>
                 <FaGoogle />
@@ -19,7 +18,7 @@ export default function Socials() {
                 variant="outline"
                 size="lg"
                 className="w-full"
-                onClick={() => signInOath('github')}
+                onClick={async () => await signInOath('github')}
             >
                 <span>Sign in with github</span>
                 <FaGithub />

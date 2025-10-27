@@ -1,6 +1,6 @@
 {
-  "id": "af1a132e-b7e8-4f2d-97c5-b43d31233ee1",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "e965d640-7c55-49b7-afd3-65d586ebbaca",
+  "prevId": "827deb18-f356-4c4b-bb01-ac07b4aa5e58",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -8,8 +8,8 @@
       "name": "account",
       "schema": "",
       "columns": {
-        "user_id": {
-          "name": "user_id",
+        "userId": {
+          "name": "userId",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -26,8 +26,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "provider_account_id": {
-          "name": "provider_account_id",
+        "providerAccountId": {
+          "name": "providerAccountId",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -77,12 +77,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "account_user_id_user_id_fk": {
-          "name": "account_user_id_user_id_fk",
+        "account_userId_user_id_fk": {
+          "name": "account_userId_user_id_fk",
           "tableFrom": "account",
           "tableTo": "user",
           "columnsFrom": [
-            "user_id"
+            "userId"
           ],
           "columnsTo": [
             "id"
@@ -101,14 +101,14 @@
       "name": "session",
       "schema": "",
       "columns": {
-        "session_token": {
-          "name": "session_token",
+        "sessionToken": {
+          "name": "sessionToken",
           "type": "text",
           "primaryKey": true,
           "notNull": true
         },
-        "user_id": {
-          "name": "user_id",
+        "userId": {
+          "name": "userId",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -122,12 +122,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "session_user_id_user_id_fk": {
-          "name": "session_user_id_user_id_fk",
+        "session_userId_user_id_fk": {
+          "name": "session_userId_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
           "columnsFrom": [
-            "user_id"
+            "userId"
           ],
           "columnsTo": [
             "id"
@@ -164,14 +164,14 @@
           "primaryKey": false,
           "notNull": true
         },
-        "password_hash": {
-          "name": "password_hash",
+        "passwordHash": {
+          "name": "passwordHash",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "email_verified": {
-          "name": "email_verified",
+        "emailVerified": {
+          "name": "emailVerified",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
@@ -183,8 +183,8 @@
           "notNull": true,
           "default": "'/default_pfp.svg'"
         },
-        "two_factor_enabled": {
-          "name": "two_factor_enabled",
+        "twoFactorEnabled": {
+          "name": "twoFactorEnabled",
           "type": "boolean",
           "primaryKey": false,
           "notNull": false,
@@ -192,7 +192,7 @@
         },
         "role": {
           "name": "role",
-          "type": "user_role",
+          "type": "userRole",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
@@ -205,15 +205,15 @@
           "notNull": true,
           "default": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
@@ -236,8 +236,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.verification_token": {
-      "name": "verification_token",
+    "public.verificationToken": {
+      "name": "verificationToken",
       "schema": "",
       "columns": {
         "email": {
@@ -261,9 +261,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "verification_token_email_user_email_fk": {
-          "name": "verification_token_email_user_email_fk",
-          "tableFrom": "verification_token",
+        "verificationToken_email_user_email_fk": {
+          "name": "verificationToken_email_user_email_fk",
+          "tableFrom": "verificationToken",
           "tableTo": "user",
           "columnsFrom": [
             "email"
@@ -277,8 +277,8 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "verification_token_email_unique": {
-          "name": "verification_token_email_unique",
+        "verificationToken_email_unique": {
+          "name": "verificationToken_email_unique",
           "nullsNotDistinct": false,
           "columns": [
             "email"
@@ -291,8 +291,8 @@
     }
   },
   "enums": {
-    "public.user_role": {
-      "name": "user_role",
+    "public.userRole": {
+      "name": "userRole",
       "schema": "public",
       "values": [
         "admin",

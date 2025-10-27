@@ -30,12 +30,11 @@ export async function createNewUser(
     email: string,
     passwordHash: string,
 ) {
-    const newUser = await db.insert(users).values({
+    await db.insert(users).values({
         name,
         email,
         passwordHash,
     });
-    return newUser;
 }
 
 export async function verifyUser(email: string) {
